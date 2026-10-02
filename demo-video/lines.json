@@ -15,7 +15,8 @@
    "expect": "ok",
    "caption": "Hold Space and call Ground",
    "means": "Isola Ground, Foxtrot Alpha Bravo Charlie Delta, at the flying club, request taxi for circuits.",
-   "say": "Isola Graound, Foxtrot Alfa Bravo Charlie Delta, at ze flaïïng kleub, riquouest taxi for seurkits."
+   "say": "Isola Graound, Foxtrot Alfa Bravo Charlie Delta, at ze flaïïng kleub, riquouest taxi for seurkits.",
+   "say_kokoro": "Isola Ground, Foxtrot Alpha Bravo Sharlie Delta, at ze flying club, request taxi for circuits."
   },
   {
    "step": "taxi_clearance",
@@ -24,7 +25,8 @@
    "caption": "Read back, with a wrong QNH on purpose",
    "means": "Runway two seven, QNH one zero two zero, holding point Alpha One via Bravo, Foxtrot Alpha Bravo Charlie Delta.",
    "say": "Kiou-ènn-eïtch ouane ziro tou ziro, reunouaï tou sévène, holdinng poïnte Alfa Ouane via Bravo, Foxtrot Alfa Bravo Charlie Delta.",
-   "expect_tower": "negative"
+   "expect_tower": "negative",
+   "say_kokoro": "Runway two seven, QNH one zero two zero, olding point Alpha One via Bravo, Foxtrot Alpha Bravo Sharlie Delta."
   },
   {
    "step": "taxi_correction",
@@ -32,14 +34,16 @@
    "expect": "ok",
    "caption": "Negative: read back the right value",
    "means": "QNH one zero one zero, Foxtrot Alpha Bravo Charlie Delta.",
-   "say": "Kiou-ènn-eïtch ouane ziro ouane ziro, Foxtrot Alfa Bravo Charlie Delta."
+   "say": "Kiou-ènn-eïtch ouane ziro ouane ziro, Foxtrot Alfa Bravo Charlie Delta.",
+   "say_kokoro": "QNH one zero one zero, Foxtrot Alpha Bravo Sharlie Delta."
   },
   {
    "step": "ready_ground",
    "keep": false,
    "expect": "ok",
    "means": "Foxtrot Alpha Bravo Charlie Delta, holding point Alpha One, ready.",
-   "say": "Foxtrot Alfa Bravo Charlie Delta, holdinng poïnte Alfa Ouane, rèdi."
+   "say": "Foxtrot Alfa Bravo Charlie Delta, holdinng poïnte Alfa Ouane, rèdi.",
+   "say_kokoro": "Foxtrot Alpha Bravo Sharlie Delta, olding point Alpha One, ready."
   },
   {
    "step": "contact_tower",
@@ -47,21 +51,24 @@
    "expect": "ok",
    "skip_if_wrong": true,
    "means": "Squawk two three four one, Tower one one eight decimal five zero five, Foxtrot Charlie Delta.",
-   "say": "Skouok tou tri for ouane, Taoueur ouane ouane eït dessimal faïve ziro faïve, Foxtrot Charlie Delta."
+   "say": "Skouok tou tri for ouane, Taoueur ouane ouane eït dessimal faïve ziro faïve, Foxtrot Charlie Delta.",
+   "say_kokoro": "Squawk two three four one, Tower one one eight decimal five zero five, Foxtrot Sharlie Delta."
   },
   {
    "step": "ready_tower",
    "keep": false,
    "expect": "ok",
    "means": "Isola Tower, Foxtrot Alpha Bravo Charlie Delta, holding point Alpha One, ready for departure.",
-   "say": "Isola Taoueur, Foxtrot Alfa Bravo Charlie Delta, holdinng poïnte Alfa Ouane, rèdi for dipartcheur."
+   "say": "Isola Taoueur, Foxtrot Alfa Bravo Charlie Delta, holdinng poïnte Alfa Ouane, rèdi for dipartcheur.",
+   "say_kokoro": "Isola Tower, Foxtrot Alpha Bravo Sharlie Delta, olding point Alpha One, ready for departure."
   },
   {
    "step": "line_up",
    "keep": false,
    "expect": "ok",
    "means": "Runway two seven, line up and wait, Foxtrot Alpha Bravo Charlie Delta.",
-   "say": "Reunouaï tou sévène, laïne eup ènd ouèïte, Foxtrot Alfa Bravo Charlie Delta."
+   "say": "Reunouaï tou sévène, laïne eup ènd ouèïte, Foxtrot Alfa Bravo Charlie Delta.",
+   "say_kokoro": "Runway two seven, line up and wait, Foxtrot Alpha Bravo Sharlie Delta."
   },
   {
    "step": "takeoff",
@@ -69,7 +76,8 @@
    "expect": "ok",
    "caption": "Take-off clearance",
    "means": "Runway two seven, cleared for take-off, Foxtrot Charlie Delta.",
-   "say": "Reunouaï tou sévène, clired for tèïk off, Foxtrot Charlie Delta."
+   "say": "Reunouaï tou sévène, clired for tèïk off, Foxtrot Charlie Delta.",
+   "say_kokoro": "Runway two seven, cleared for take-off, Foxtrot Sharlie Delta."
   },
   {
    "step": "downwind_1",
@@ -78,7 +86,8 @@
    "caption": "Downwind, and another aircraft on the frequency",
    "means": "Foxtrot Charlie Delta, downwind, touch and go.",
    "say": "Foxtrot Charlie Delta, daounouinde, teutch ènd go.",
-   "expect_tower": "follow the"
+   "expect_tower": "follow the",
+   "say_kokoro": "Foxtrot Sharlie Delta, downwind, touch and go."
   },
   {
    "step": "follow_1",
@@ -86,7 +95,8 @@
    "expect": "ok",
    "caption": "Read back: number 2, traffic in sight",
    "means": "Number two, Cherokee in sight, Foxtrot Charlie Delta.",
-   "say": "Number tou, Cherokee in saïte, Foxtrot Charlie Delta."
+   "say": "Number tou, Cherokee in saïte, Foxtrot Charlie Delta.",
+   "say_kokoro": "Number two, Cherokee in sight, Foxtrot Sharlie Delta."
   }
  ],
  "margins": {

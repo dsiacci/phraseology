@@ -129,7 +129,7 @@ The online demo works differently: your voice is sent to the demo server, transc
 
 ## Demo video
 
-The demo video is one real game on the online demo, recorded in a headless browser with a simulated microphone: speech recognition, the checker and the tower are the real ones, and only the pilot's voice is synthetic too (a French Piper voice reading English, for a strong accent). [`demo-video/`](demo-video/) has the recipe to make it again.
+The demo video is one real game on the online demo, recorded in a headless browser with a simulated microphone: speech recognition, the checker and the tower are the real ones, and only the pilot's voice is synthetic too (Kokoro, an open model, with its French voice reading English). [`demo-video/`](demo-video/) has the recipe to make it again.
 
 ## Deploy
 
@@ -147,7 +147,8 @@ Built on open work, with thanks:
 - [Whisper](https://github.com/openai/whisper) by OpenAI: code and model weights under the MIT license. Models converted to CTranslate2 by SYSTRAN (`Systran/faster-whisper-small.en`, `base.en`, MIT).
 - [faster-whisper](https://github.com/SYSTRAN/faster-whisper) (MIT) and [CTranslate2](https://github.com/OpenNMT/CTranslate2) (MIT), with the [Silero VAD](https://github.com/snakers4/silero-vad) model (MIT) for voice activity detection.
 - [Piper](https://github.com/OHF-Voice/piper1-gpl) (GPL-3.0-or-later), which uses [espeak-ng](https://github.com/espeak-ng/espeak-ng) (GPL-3.0-or-later), running on [ONNX Runtime](https://onnxruntime.ai) (MIT).
-- Voices from [rhasspy/piper-voices](https://huggingface.co/rhasspy/piper-voices): `en_US-norman-medium` (the tower) and `en_GB-cori-medium` (the other aircraft), both trained from scratch by Bryce Beattie on public-domain LibriVox recordings. Several other English voices there are fine-tuned from `en_US-lessac`, whose dataset comes under the Blizzard Challenge 2013 license, so they are left out. The demo video's pilot is `fr_FR-mls-medium`, trained from scratch on [Multilingual LibriSpeech](http://www.openslr.org/94/) (CC BY 4.0).
+- Voices from [rhasspy/piper-voices](https://huggingface.co/rhasspy/piper-voices): `en_US-norman-medium` (the tower) and `en_GB-cori-medium` (the other aircraft), both trained from scratch by Bryce Beattie on public-domain LibriVox recordings. Several other English voices there are fine-tuned from `en_US-lessac`, whose dataset comes under the Blizzard Challenge 2013 license, so they are left out.
+- The demo video's pilot: [Kokoro-82M](https://huggingface.co/hexgrad/Kokoro-82M) by hexgrad (Apache 2.0) through [kokoro-onnx](https://github.com/thewh1teagle/kokoro-onnx) (MIT), voice `ff_siwis`, trained on the [SIWIS French Speech Synthesis Database](https://datashare.ed.ac.uk/handle/10283/2353) (CC BY 4.0).
 - [NumPy](https://numpy.org) (BSD).
 
 ## License
