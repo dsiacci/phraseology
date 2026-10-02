@@ -108,14 +108,28 @@ def main():
         else:
             segments.append((a - m["before_answer"], s + m["after_settled"], caption))
 
+    # When the pilot is speaking (global times), for the badge.
+    speaking = [(sec(e["t"]), sec(e["t"]) + e["dur"]) for e in pilot_plays]
+    badge = OUT / "pilot_badge.png"
+
     parts = [OUT / "part_open.mp4"]
     card(OUT / "card_open.png", script.get("open_seconds", 6), parts[0])
     for k, (start, end, caption) in enumerate(segments):
         part = OUT / f"part_{k:02d}.mp4"
         args = ["-ss", f"{start:.2f}", "-to", f"{end:.2f}", "-i", OUT / "full.mp4"]
+        chain, last, n = [], "0:v", 1
         if caption and caption.exists():
-            args += ["-i", caption, "-filter_complex", "[0:v][1:v]overlay=x=40:y=H-h-40[v]",
-                     "-map", "[v]", "-map", "0:a"]
+            args += ["-i", caption]
+            chain.append(f"[{last}][{n}:v]overlay=x=40:y=H-h-40[c{n}]")
+            last, n = f"c{n}", n + 1
+        windows = [(max(a, start) - start, min(b, end) - start) for a, b in speaking if a < end and b > start]
+        if windows and badge.exists():
+            args += ["-i", badge]
+            on = "+".join(f"between(t,{a:.2f},{b:.2f})" for a, b in windows)
+            chain.append(f"[{last}][{n}:v]overlay=x=W-w-40:y=H-h-40:enable='{on}'[c{n}]")
+            last, n = f"c{n}", n + 1
+        if chain:
+            args += ["-filter_complex", ";".join(chain), "-map", f"[{last}]", "-map", "0:a"]
         run(*args, "-r", FPS, "-c:v", "libx264", "-preset", "veryfast", "-crf", "20",
             "-pix_fmt", "yuv420p", "-c:a", "aac", "-ar", "48000", "-ac", "1", part)
         parts.append(part)

@@ -25,7 +25,7 @@ Whisper hears a synthetic accent a little differently from one run to the next. 
 
 - `make_lines.py` synthesizes each line of `lines.json` with the pilot's voice. It keeps track of what it already made (`out/lines.json`), so an unchanged line is not synthesized, or paid for, twice.
 - `record.cjs` opens the game at a fixed seed (`?seed=71`: runway 27, QNH 1010, a Cherokee on base), replaces the microphone with an audio stream it controls, holds Space, plays a line into that stream, releases Space, and waits for the tower to finish talking. It keeps the tower audio as the page plays it, and the time of every event. It also renders the opening and closing cards and the captions as PNG.
-- `build.py` lays the pilot's lines and the tower's messages on one audio track at the times they were played, with the band-pass filter the page applies to the tower, muxes it with the screen recording, keeps the lines marked `keep`, cuts the wait while the server transcribes, and adds the captions and the cards.
+- `build.py` lays the pilot's lines and the tower's messages on one audio track at the times they were played, with the band-pass filter the page applies to the tower, muxes it with the screen recording, keeps the lines marked `keep`, cuts the wait while the server transcribes, and adds the captions, a "pilot speaking" badge while the pilot talks (the voice stands in for a person), and the cards.
 
 ## Change it
 

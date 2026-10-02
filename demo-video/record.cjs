@@ -162,7 +162,24 @@ const CSS = `
   .card p { font-size: 24px; line-height: 1.45; color: #b9c4cf; max-width: 1000px; }
   .card .mono { font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 22px; color: #ffb000; }
   .cap { display: inline-block; background: rgba(12, 16, 19, 0.88); color: #fff; font-size: 30px; font-weight: 600; padding: 12px 22px; border-radius: 10px; border-left: 6px solid #ffb000; }
+  .who { display: inline-flex; align-items: center; gap: 16px; background: rgba(12, 16, 19, 0.9); color: #fff; padding: 14px 24px 14px 16px; border-radius: 14px; border: 2px solid #ffb000; }
+  .who b { display: block; font-size: 28px; letter-spacing: .06em; }
+  .who span { display: block; font-size: 20px; color: #ffcf66; }
 `;
+
+// Shown while the pilot speaks: the voice stands in for a person.
+const PILOT_BADGE = `<div class="who" id="c">
+  <svg viewBox="0 0 64 64" width="64" height="64" aria-hidden="true">
+    <circle cx="32" cy="24" r="12" fill="#e8edf2"/>
+    <path d="M10 60c2-13 11-19 22-19s20 6 22 19z" fill="#e8edf2"/>
+    <path d="M17 25a15 15 0 0 1 30 0" stroke="#ffb000" stroke-width="4" fill="none"/>
+    <rect x="13" y="22" width="7" height="11" rx="3" fill="#ffb000"/>
+    <rect x="44" y="22" width="7" height="11" rx="3" fill="#ffb000"/>
+    <path d="M16 32c0 7 5 10 12 10" stroke="#ffb000" stroke-width="3" fill="none"/>
+    <circle cx="29" cy="42" r="3" fill="#ffb000"/>
+  </svg>
+  <div><b>PILOT SPEAKING</b><span>a person, on the radio</span></div>
+</div>`;
 
 async function stills(browser) {
   const page = await browser.newPage({ viewport: { width: W, height: H } });
@@ -170,6 +187,8 @@ async function stills(browser) {
     await page.setContent(`<style>${CSS}</style><div class="card">${html}</div>`);
     await page.screenshot({ path: path.join(OUT, `card_${name}.png`) });
   }
+  await page.setContent(`<style>${CSS} body { background: transparent; }</style>${PILOT_BADGE}`);
+  await page.locator("#c").screenshot({ path: path.join(OUT, "pilot_badge.png"), omitBackground: true });
   for (const [i, line] of script.lines.entries()) {
     if (!line.caption) continue;
     await page.setContent(`<style>${CSS} body { background: transparent; }</style><div style="padding: 0 0 0 0"><span class="cap" id="c"></span></div>`);
