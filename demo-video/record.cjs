@@ -62,6 +62,9 @@ const INIT = `(() => {
 let invalid = false;
 
 async function play(browser) {
+  // Takes, as on a film set: a shown exchange that misfires ends the take
+  // and a new game starts from the top. The video uses the clean take.
+  const takes = Number(process.env.TAKES || 8);
   const context = await browser.newContext({
     viewport: { width: W, height: H },
     recordVideo: { dir: path.join(OUT, "raw"), size: { width: W, height: H } },
@@ -70,71 +73,84 @@ async function play(browser) {
   await context.addInitScript(INIT);
   const page = await context.newPage();
   const marks = [{ ev: "video_start", t: Date.now() }];
-  await page.goto(script.url, { waitUntil: "networkidle" });
-  await page.waitForTimeout(2000);
-  marks.push({ ev: "click_start", t: Date.now() });
-  await page.click("#start");
-  await page.waitForTimeout(1500);
-
   const until = process.argv.includes("--until") ? Number(process.argv[process.argv.indexOf("--until") + 1]) : Infinity;
-  for (const [i, line] of script.lines.entries()) {
-    if (i > until) break;
-    const wav = fs.readFileSync(path.join(OUT, `pilot_${String(i).padStart(2, "0")}.wav`)).toString("base64");
-    for (let tries = 0; tries < 3; tries++) {
-      const youBefore = await page.locator("#log .tx.you").count();
-      const txBefore = await page.locator("#log .tx:not(.you)").count();
-      const playsBefore = await page.evaluate(() => window.__plays);
-      await page.keyboard.down("Space");
-      await page.waitForTimeout(250);
-      marks.push({ ev: "pilot", i, try: tries, t: Date.now() });
-      await page.evaluate((b) => window.__pilot.say(b), wav);
-      await page.waitForTimeout(300);
-      await page.keyboard.up("Space");
-      marks.push({ ev: "release", i, try: tries, t: Date.now() });
-      await page.waitForFunction((n) => document.querySelectorAll("#log .tx.you").length > n, youBefore, { timeout: 40000 });
-      marks.push({ ev: "answer", i, try: tries, t: Date.now() });
+  let clean = false;
+  for (let take = 0; take < takes && !clean; take++) {
+    await page.goto(script.url, { waitUntil: "networkidle" });
+    await page.waitForTimeout(2000);
+    marks.push({ ev: "click_start", take, t: Date.now() });
+    await page.click("#start");
+    await page.waitForTimeout(1500);
+    clean = true;
+    for (const [i, line] of script.lines.entries()) {
+      if (i > until) break;
+      const ok = await say(page, marks, take, i, line);
+      if (!ok) { clean = false; console.log(`take ${take} ends at line ${i}`); break; }
       await page.waitForTimeout(500);
-      const newTx = (await page.locator("#log .tx:not(.you)").count()) - txBefore;
-      if (newTx > 0) {
-        await page.waitForFunction((n) => window.__plays >= n, playsBefore + newTx, { timeout: 30000 });
-        await page.waitForFunction(() => performance.now() > window.__busyUntil + 700, null, { timeout: 30000 });
-      }
-      marks.push({ ev: "settled", i, try: tries, t: Date.now() });
-      const last = page.locator("#log .tx.you").last();
-      const accepted = (await last.getAttribute("class")).includes(" ok");
-      const said = await last.locator(".text").innerText();
-      const tower = newTx > 0 ? await page.locator("#log .tx:not(.you) .text").last().innerText() : "";
-      // The video's captions describe this exchange: it has to happen as planned.
-      const asPlanned = accepted === (line.expect === "ok") && (!line.expect_tower || tower.includes(line.expect_tower));
-      marks.push({ ev: "verdict", i, accepted, said, tower, try: tries, asPlanned });
-      console.log(`${i} ${line.step} ${asPlanned ? "as planned" : "not as planned"} | ${said} | ${tower}`);
-      if (asPlanned) break;
-      if (line.keep && tries === 2) invalid = true;
-      if (line.skip_if_wrong) {
-        // A line the video doesn't show: move on, off camera.
-        const before = await page.evaluate(() => window.__plays);
-        const txSkip = await page.locator("#log .tx:not(.you)").count();
-        await page.click("#skip");
-        await page.waitForTimeout(500);
-        const added = (await page.locator("#log .tx:not(.you)").count()) - txSkip;
-        if (added > 0) {
-          await page.waitForFunction((n) => window.__plays >= n, before + added, { timeout: 30000 });
-          await page.waitForFunction(() => performance.now() > window.__busyUntil + 700, null, { timeout: 30000 });
-        }
-        marks.push({ ev: "skipped", i, t: Date.now() });
-        break;
-      }
-      marks.push({ ev: "retry", i });
     }
-    await page.waitForTimeout(500);
+    if (clean) marks.push({ ev: "clean_take", take });
   }
+  invalid = !clean;
   await page.waitForTimeout(1200);
   marks.push({ ev: "end", t: Date.now() });
-  const clips = await page.evaluate(() => window.__clips);
+  const clips = await page.evaluate(() => window.__clips);  // this page load = the last take
   const events = await page.evaluate(() => window.__events);
   const video = page.video();
   await context.close();
   fs.writeFileSync(path.join(OUT, "run.json"), JSON.stringify({ marks, events, clips, video: await video.path() }));
+}
+
+// One line, with retries for lines the video doesn't show. Returns false
+// when a shown exchange did not go as planned on the first try.
+async function say(page, marks, take, i, line) {
+  const wav = fs.readFileSync(path.join(OUT, `pilot_${String(i).padStart(2, "0")}.wav`)).toString("base64");
+  for (let tries = 0; tries < 3; tries++) {
+    const tag = { i, take, try: tries };
+    const youBefore = await page.locator("#log .tx.you").count();
+    const txBefore = await page.locator("#log .tx:not(.you)").count();
+    const playsBefore = await page.evaluate(() => window.__plays);
+    await page.keyboard.down("Space");
+    await page.waitForTimeout(250);
+    marks.push({ ev: "pilot", ...tag, t: Date.now() });
+    await page.evaluate((b) => window.__pilot.say(b), wav);
+    await page.waitForTimeout(300);
+    await page.keyboard.up("Space");
+    marks.push({ ev: "release", ...tag, t: Date.now() });
+    await page.waitForFunction((n) => document.querySelectorAll("#log .tx.you").length > n, youBefore, { timeout: 40000 });
+    marks.push({ ev: "answer", ...tag, t: Date.now() });
+    await page.waitForTimeout(500);
+    const newTx = (await page.locator("#log .tx:not(.you)").count()) - txBefore;
+    if (newTx > 0) {
+      await page.waitForFunction((n) => window.__plays >= n, playsBefore + newTx, { timeout: 30000 });
+      await page.waitForFunction(() => performance.now() > window.__busyUntil + 700, null, { timeout: 30000 });
+    }
+    marks.push({ ev: "settled", ...tag, t: Date.now() });
+    const last = page.locator("#log .tx.you").last();
+    const accepted = (await last.getAttribute("class")).includes(" ok");
+    const said = await last.locator(".text").innerText();
+    const tower = newTx > 0 ? await page.locator("#log .tx:not(.you) .text").last().innerText() : "";
+    // The video's captions describe this exchange: it has to happen as planned.
+    const asPlanned = accepted === (line.expect === "ok") && (!line.expect_tower || tower.includes(line.expect_tower));
+    marks.push({ ev: "verdict", ...tag, accepted, said, tower, asPlanned });
+    console.log(`take ${take} line ${i} ${line.step} ${asPlanned ? "as planned" : "not as planned"} | ${said} | ${tower}`);
+    if (asPlanned) return true;
+    if (line.keep) return false;
+    if (line.skip_if_wrong) {
+      // A line the video doesn't show: move on, off camera.
+      const before = await page.evaluate(() => window.__plays);
+      const txSkip = await page.locator("#log .tx:not(.you)").count();
+      await page.click("#skip");
+      await page.waitForTimeout(500);
+      const added = (await page.locator("#log .tx:not(.you)").count()) - txSkip;
+      if (added > 0) {
+        await page.waitForFunction((n) => window.__plays >= n, before + added, { timeout: 30000 });
+        await page.waitForFunction(() => performance.now() > window.__busyUntil + 700, null, { timeout: 30000 });
+      }
+      marks.push({ ev: "skipped", ...tag, t: Date.now() });
+      return true;
+    }
+  }
+  return !line.keep;
 }
 
 const CSS = `
@@ -169,7 +185,7 @@ async function stills(browser) {
   await stills(browser);
   await browser.close();
   if (invalid) {
-    console.log("A shown exchange did not go as planned: run it again.");
+    console.log("No clean take: change the lines that misfire most, or allow more takes (TAKES=12).");
     process.exitCode = 2;
   }
 })().catch((e) => { console.error(e); process.exit(1); });

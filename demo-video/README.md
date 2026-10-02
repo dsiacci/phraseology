@@ -16,7 +16,7 @@ pip install imageio-ffmpeg                           # or any ffmpeg on the PATH
 python demo-video/build.py                           # -> demo-video/out/demo.mp4
 ```
 
-Whisper hears a synthetic accent a little differently from one run to the next, so `record.cjs` says each line again (up to three times) until the exchange goes as planned, and `build.py` keeps that try; the earlier tries stay in the page's log on screen but are cut, like the waits. `record.cjs` exits with code 2 when a shown exchange never went as planned: change the line's spelling in `lines.json`, regenerate the lines, and check the start of the game with `node demo-video/record.cjs --until 2`. It takes about five minutes against the online demo (the tower answers about four seconds after each release).
+Whisper hears a synthetic accent a little differently from one run to the next. `record.cjs` works in takes, as on a film set: when an exchange the video shows does not go as planned the first time, it starts a new game from the top, up to 8 takes (`TAKES=12` for more), and `build.py` uses the clean take. Nothing on screen is retouched. When no take comes out clean, `record.cjs` exits with code 2: change the spelling of the lines that misfire in `lines.json`, regenerate the lines, and check the start of the game with `node demo-video/record.cjs --until 2`. It takes about five minutes against the online demo (the tower answers about four seconds after each release).
 
 ## What the steps do
 

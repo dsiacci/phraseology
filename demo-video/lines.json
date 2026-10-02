@@ -2,11 +2,11 @@
  "url": "https://159-89-0-214.sslip.io/?seed=71",
  "pilot_voice": "fr_FR-mls-medium#6",
  "length_scale": 1.0,
- "open_seconds": 6.5,
- "end_seconds": 6,
+ "open_seconds": 5,
+ "end_seconds": 4.5,
  "cards": {
-  "open": "<div class='mono'>phraseology</div><h1>A traffic circuit in English, out loud</h1><p>Recorded on the online demo: Whisper small.en hears the pilot, rules check the readback, Piper speaks for the tower. The pilot's voice is synthetic too, with a French accent, so you can hear the whole loop. The waits while the server transcribes are cut.</p>",
-  "end": "<h1>phraseology</h1><div class='sub'>github.com/dsiacci/phraseology</div><p>Open models on your own laptop: Whisper hears, Piper speaks. No language model: the rules decide.</p><p>A practice game, not training. Your instructor and your national authority's manual are the reference.</p>"
+  "open": "<div class='mono'>phraseology</div><h1>A traffic circuit in English, out loud</h1><p>The real online demo: Whisper hears, rules check, Piper speaks for the tower. The pilot is synthetic too, with a French accent. Waits are cut.</p>",
+  "end": "<h1>phraseology</h1><div class='sub'>github.com/dsiacci/phraseology</div><p>Open models on your laptop. No language model: the rules decide.</p><p>A practice game, not training.</p>"
  },
  "lines": [
   {
@@ -77,7 +77,7 @@
    "expect": "ok",
    "caption": "Downwind, and another aircraft on the frequency",
    "means": "Foxtrot Charlie Delta, downwind, touch and go.",
-   "say": "Foxtrot Charlie Delta, daounouinde, teutch-ènn-go.",
+   "say": "Foxtrot Charlie Delta, daounouinde, teutch ènd go.",
    "expect_tower": "follow the"
   },
   {
@@ -86,7 +86,15 @@
    "expect": "ok",
    "caption": "Read back: number 2, traffic in sight",
    "means": "Number two, Cherokee in sight, Foxtrot Charlie Delta.",
-   "say": "Number two, Cherokee in sight, Foxtrot Charlie Delta."
+   "say": "Number tou, Cherokee in saïte, Foxtrot Charlie Delta."
   }
- ]
+ ],
+ "margins": {
+  "before_pilot": 0.4,
+  "after_release": 0.35,
+  "before_answer": 0.2,
+  "show_answer": 0.9,
+  "before_tower": 0.25,
+  "after_settled": 0.2
+ }
 }

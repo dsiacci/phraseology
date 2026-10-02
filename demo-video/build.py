@@ -57,7 +57,9 @@ def main():
     clips = []
     pilot_plays = [e for e in run_["events"] if e["ev"] == "pilot_play"]
     pilot_marks = [m for m in marks if m["ev"] == "pilot"]
-    for m, e in zip(pilot_marks, pilot_plays):
+    # Pilot plays of the last page load (the clean take) pair with its marks.
+    take_marks = [m for m in pilot_marks if m.get("take") == max(p.get("take", 0) for p in pilot_marks)]
+    for m, e in zip(take_marks, pilot_plays):
         clips.append((OUT / f"pilot_{m['i']:02d}.wav", sec(e["t"]), 300, 3400))
     for k, c in enumerate(run_["clips"]):
         path = OUT / f"tower_{k:02d}.wav"
@@ -80,23 +82,31 @@ def main():
         "-c:a", "aac", "-b:a", "160k", "-shortest", OUT / "full.mp4")
 
     # 3. the parts to keep
-    def mark(ev, i=None, try_=None):
-        return [m for m in marks if m["ev"] == ev and (i is None or m.get("i") == i)
-                and (try_ is None or m.get("try") == try_)]
+    take = next(m["take"] for m in marks if m["ev"] == "clean_take")
 
+    def mark(ev, i=None, try_=None):
+        return [m for m in marks if m["ev"] == ev and m.get("take", take) == take
+                and (i is None or m.get("i") == i) and (try_ is None or m.get("try") == try_)]
+
+    m = {"before_pilot": 0.4, "after_release": 0.35, "before_answer": 0.2, "show_answer": 0.9,
+         "before_tower": 0.25, "after_settled": 0.2, **script.get("margins", {})}
+    plays = sorted(sec(c["t"]) for c in run_["clips"])
     click = sec(mark("click_start")[0]["t"])
-    segments = [(click - 1.2, click + 2.2, None)]
+    segments = [(click - 0.6, click + 1.6, None)]
     for i, line in enumerate(script["lines"]):
         if not line.get("keep"):
             continue
         caption = OUT / f"caption_{i:02d}.png" if line.get("caption") else None
-        # The try that went as planned; earlier tries stay visible in the
-        # page's log but are cut, like the waits.
-        good = [v["try"] for v in mark("verdict", i) if v.get("asPlanned")]
-        t = good[0] if good else 0
-        p, r, a, s = (mark(ev, i, t)[0] for ev in ("pilot", "release", "answer", "settled"))
-        segments.append((sec(p["t"]) - 0.7, sec(r["t"]) + 0.7, caption))
-        segments.append((sec(a["t"]) - 0.3, sec(s["t"]) + 0.4, caption))
+        p, r, a, s = (sec(mark(ev, i, 0)[0]["t"]) for ev in ("pilot", "release", "answer", "settled"))
+        segments.append((p - m["before_pilot"], r + m["after_release"], caption))
+        # The feedback appears, then the tower speaks: cut the wait for its
+        # voice to be synthesized in between.
+        first = next((x for x in plays if a <= x <= s), None)
+        if first is not None and first - a > m["show_answer"] + m["before_tower"]:
+            segments.append((a - m["before_answer"], a + m["show_answer"], caption))
+            segments.append((first - m["before_tower"], s + m["after_settled"], caption))
+        else:
+            segments.append((a - m["before_answer"], s + m["after_settled"], caption))
 
     parts = [OUT / "part_open.mp4"]
     card(OUT / "card_open.png", script.get("open_seconds", 6), parts[0])
