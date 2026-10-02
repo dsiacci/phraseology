@@ -1,5 +1,5 @@
 # /etc/default/phraseology: what the online demo plays.
-TOWER_VOICE=en_GB-cori-medium
+TOWER_VOICE=en_US-norman-medium
 TRAFFIC_VOICE=en_GB-cori-medium
 CALLSIGN=F-ABCD
 AERODROME=Isola

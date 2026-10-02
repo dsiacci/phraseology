@@ -14,8 +14,8 @@ from .speech import DEFAULT_VOICES_DIR
 
 os.environ.setdefault("HF_HUB_DISABLE_TELEMETRY", "1")
 
-TOWER_VOICE = "en_GB-cori-medium"
-TRAFFIC_VOICE = "en_US-norman-medium"
+TOWER_VOICE = "en_US-norman-medium"
+TRAFFIC_VOICE = "en_GB-cori-medium"
 
 
 def settings_from(args) -> Settings:

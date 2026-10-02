@@ -73,8 +73,8 @@ class RateLimiter:
 class App:
     def __init__(self, settings: Settings, transcriber=None, speaker=None, *,
                  public: bool = False, limits: Limits | None = None,
-                 tower_voice: str = "en_GB-cori-medium",
-                 traffic_voice: str = "en_US-norman-medium"):
+                 tower_voice: str = "en_US-norman-medium",
+                 traffic_voice: str = "en_GB-cori-medium"):
         self.settings = settings
         self.transcriber = transcriber
         self.speaker = speaker

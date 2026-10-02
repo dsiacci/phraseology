@@ -94,8 +94,8 @@ Options:
 | `--altimeter` | `QNH` | or `QFE` |
 | `--model` | `small.en` | `base.en` is lighter and a little less accurate |
 | `--threads` | `0` | CPU threads for Whisper (0 = faster-whisper's default, 4) |
-| `--tower-voice` | `en_GB-cori-medium` | any Piper voice in the voices folder |
-| `--traffic-voice` | `en_US-norman-medium` | the other aircraft |
+| `--tower-voice` | `en_US-norman-medium` | any Piper voice in the voices folder |
+| `--traffic-voice` | `en_GB-cori-medium` | the other aircraft |
 
 On an older machine or one with 4 GB of memory, use `--model base.en`.
 
@@ -143,7 +143,7 @@ Built on open work, with thanks:
 - [Whisper](https://github.com/openai/whisper) by OpenAI: code and model weights under the MIT license. Models converted to CTranslate2 by SYSTRAN (`Systran/faster-whisper-small.en`, `base.en`, MIT).
 - [faster-whisper](https://github.com/SYSTRAN/faster-whisper) (MIT) and [CTranslate2](https://github.com/OpenNMT/CTranslate2) (MIT), with the [Silero VAD](https://github.com/snakers4/silero-vad) model (MIT) for voice activity detection.
 - [Piper](https://github.com/OHF-Voice/piper1-gpl) (GPL-3.0-or-later), which uses [espeak-ng](https://github.com/espeak-ng/espeak-ng) (GPL-3.0-or-later), running on [ONNX Runtime](https://onnxruntime.ai) (MIT).
-- Voices from [rhasspy/piper-voices](https://huggingface.co/rhasspy/piper-voices): `en_GB-cori-medium` and `en_US-norman-medium`, trained by Bryce Beattie from public-domain LibriVox recordings.
+- Voices from [rhasspy/piper-voices](https://huggingface.co/rhasspy/piper-voices): `en_US-norman-medium` (the tower) and `en_GB-cori-medium` (the other aircraft), both trained from scratch by Bryce Beattie on public-domain LibriVox recordings. Some other English voices there are fine-tuned from a voice whose dataset license only covers research, so they are left out.
 - [NumPy](https://numpy.org) (BSD).
 
 ## License
