@@ -6,6 +6,8 @@ The tower talks to you with a synthetic voice. You hold the space bar like a pre
 
 > **A practice game, not training.** This is not an approved training device, not an assessment, and not a preparation for any language proficiency check. The aerodrome, its frequencies and the traffic are made up. Phraseology differs from one country to the next: your flight instructor and your national authority's manual are the reference.
 
+![A game in progress: a wrong QNH, the tower's "negative", the corrected readback, then the next instruction](docs/screenshot.png)
+
 ## What a game looks like
 
 You are F-ABCD, a light aircraft parked at the flying club of Isola, a fictional controlled aerodrome (location indicator ZZZZ). One game is one session in the circuit:
@@ -72,6 +74,8 @@ pip install .
 python -m phraseology download       # Whisper small.en and two Piper voices
 python -m phraseology serve --open   # http://localhost:8000
 ```
+
+Add `?seed=71` to the address to replay the same game every time (handy to rehearse or to record a demo).
 
 The browser asks for the microphone the first time. Hold the space bar while you speak, release when you're done (on a phone or tablet, hold the round button). No microphone? Type your transmissions in the box under the button, or play in the terminal:
 
