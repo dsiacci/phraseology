@@ -73,6 +73,8 @@ PHRASES = [
     (r"\bwilko\b", "wilco"),
     (r"\bsquawking\b|\bsquak\b|\bsqwak\b|\bsquark\b|\bsquawks\b", "squawk"),
     (r"\bdown[\s-]+wind\b", "downwind"),
+    # "decimal eight" heard as one word
+    (r"\bdisseminate\b", "decimal 8"),
     (r"(\d)\s*(?:point|decimal)\s*(\d)", r"\1 decimal \2"),
     (r"(\d)\.(\d)", r"\1 decimal \2"),
 ]
@@ -181,7 +183,7 @@ def _fix_niner(tokens: list[str]) -> list[str]:
             if nxt in ("R", "r", "er", "ner", "nah"):
                 i += 2
                 continue
-            if nxt in ("and", "are", "or", "a") and (after.isdigit() or after in HOMOPHONES):
+            if nxt in ("and", "are", "or", "a", "at") and (after.isdigit() or after in HOMOPHONES):
                 i += 2
                 continue
         i += 1

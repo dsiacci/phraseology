@@ -19,6 +19,7 @@ def test_what_whisper_does_with_niner():
     assert normalize("Runway 0-9-R, cleared for take-off") == ["runway", "0", "9", "cleared", "for", "takeoff"]
     assert normalize("QNH 9 and 9 are 8 hectopascals")[:4] == ["qnh", "9", "9", "8"]
     assert normalize("QNH, 9 or 9 or 8, hectopascals")[:4] == ["qnh", "9", "9", "8"]
+    assert normalize("QNH 9 at 9 at 8")[:4] == ["qnh", "9", "9", "8"]
 
 
 def test_homophones_only_in_numbers():
@@ -33,6 +34,7 @@ def test_frequencies():
     assert normalize("121 decimal 805") == want
     assert normalize("one two one decimal eight zero five") == want
     assert normalize("121 point 805") == want
+    assert normalize("1-2-1, disseminate 0-5")[:5] == ["1", "2", "1", "decimal", "8"]
 
 
 def test_phrases_glued():
