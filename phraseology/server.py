@@ -436,6 +436,7 @@ class _Waiter:
 
 def make_server(app: App, host: str = "127.0.0.1", port: int = 8000) -> ThreadingHTTPServer:
     handler = type("BoundHandler", (Handler,), {"app": app})
+    ThreadingHTTPServer.request_queue_size = 64
     server = ThreadingHTTPServer((host, port), handler)
     server.daemon_threads = True
     return server

@@ -7,7 +7,7 @@ Wants=network-online.target
 User=phraseology
 Group=phraseology
 WorkingDirectory=/opt/phraseology
-Environment=HOME=/opt/phraseology HF_HOME=/opt/phraseology/hf HF_HUB_OFFLINE=1 PYTHONUNBUFFERED=1
+Environment=HOME=/opt/phraseology HF_HOME=/opt/phraseology/hf HF_HUB_OFFLINE=1 HF_HUB_DISABLE_TELEMETRY=1 PYTHONUNBUFFERED=1
 EnvironmentFile=-/etc/default/phraseology
 ExecStart=/opt/phraseology/venv/bin/python -m phraseology serve --public \
     --host 127.0.0.1 --port 8000 --model base.en --threads 2 \

@@ -27,7 +27,7 @@ DIGIT_WORDS = {
     "zero": "0", "one": "1", "wun": "1", "two": "2", "three": "3",
     "tree": "3", "four": "4", "fower": "4", "five": "5", "fife": "5",
     "six": "6", "seven": "7", "eight": "8", "ait": "8", "nine": "9",
-    "niner": "9", "nina": "9",
+    "niner": "9", "nina": "9", "minor": "9", "nyner": "9",
 }
 
 TEENS = {

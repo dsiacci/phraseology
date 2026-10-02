@@ -127,6 +127,11 @@ class Speaker:
         self.lock = threading.Lock()
 
     def _load(self, name: str):
+        try:
+            import onnxruntime
+            onnxruntime.disable_telemetry_events()
+        except Exception:
+            pass
         from piper import PiperVoice
         model = name.split("#")[0]
         if model not in self._voices:

@@ -4,12 +4,15 @@ from __future__ import annotations
 
 import argparse
 import logging
+import os
 import sys
 import webbrowser
 from pathlib import Path
 
 from .scenario import Aerodrome, Game, Settings
 from .speech import DEFAULT_VOICES_DIR
+
+os.environ.setdefault("HF_HUB_DISABLE_TELEMETRY", "1")
 
 TOWER_VOICE = "en_GB-cori-medium"
 TRAFFIC_VOICE = "en_US-norman-medium"
