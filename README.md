@@ -50,7 +50,8 @@ A few details that took some care:
 
 In our own words. The legal basis in Europe is SERA.8015(e) of Commission Implementing Regulation (EU) No 923/2012 (Standardised European Rules of the Air).
 
-- Safety-related parts of a clearance or instruction are read back: runway in use, clearances to line up, take off, land or touch and go, taxi instructions, altimeter settings, transponder codes, frequency changes.
+- Always read back: the runway in use; clearances and instructions to enter, land on, take off from, hold short of, cross or backtrack on a runway (so line up, take-off, touch and go and landing clearances); altimeter settings; transponder codes; new frequencies.
+- Other instructions, taxi instructions included, are read back or acknowledged so that it is clear you understood and will comply. This game asks for taxi instructions in full, as the UK and many aerodromes do.
 - A readback ends with your callsign. A call that starts an exchange begins with it.
 - You may shorten your callsign (F-ABCD to F-CD) only after the station has shortened it.
 - Other messages are acknowledged: "wilco" when you will comply with an instruction, "roger" when you have only received information. "Roger" never replaces a readback.

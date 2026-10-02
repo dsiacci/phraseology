@@ -3,14 +3,17 @@
 The rules, in our own words (legal basis in Europe: SERA.8015(e),
 Commission Implementing Regulation (EU) No 923/2012):
 
-* Safety-related parts of a clearance or instruction are read back in
-  full: runway in use, clearances to enter, line up on, take off from,
-  land on, cross or hold short of a runway, taxi instructions,
-  altimeter settings, transponder codes, frequency changes.
+* Always read back: the runway in use; clearances and instructions to
+  enter, land on, take off from, hold short of, cross or backtrack on a
+  runway; altimeter settings; transponder codes; new frequencies.
+* Other instructions, taxi instructions included, are read back or
+  acknowledged so that it is clear they were understood and will be
+  complied with. This game asks for taxi instructions in full, as the
+  UK and many aerodromes do.
 * A readback ends with the aircraft callsign. A call that starts a new
   exchange begins with it.
-* Anything else may be acknowledged: "wilco" when you will comply with
-  an instruction, "roger" when you have only received information.
+* "Wilco" when you will comply with an instruction, "roger" when you
+  have only received information; neither replaces a readback.
 * A wrong readback gets "negative" from the tower, then the correct
   version, and you read it back again.
 
@@ -29,9 +32,9 @@ REASONS = {
     "runway": "the runway in use is always read back",
     "qnh": "altimeter settings are always read back",
     "squawk": "transponder codes are always read back",
-    "holding_point": "taxi instructions are read back in full",
-    "via": "taxi instructions are read back in full",
-    "taxi_limit": "taxi instructions are read back in full",
+    "holding_point": "this game asks for taxi instructions in full",
+    "via": "this game asks for taxi instructions in full",
+    "taxi_limit": "this game asks for taxi instructions in full",
     "frequency": "frequency changes are read back",
     "clearance": "runway clearances are always read back",
     "circuit": "this instruction is part of the clearance",
