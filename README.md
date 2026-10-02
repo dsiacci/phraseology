@@ -115,7 +115,7 @@ The online demo works differently: your voice is sent to the demo server, transc
 
 ## Deploy
 
-The online demo runs on a small CPU server; the configuration files and the step-by-step notes will be in `deploy/`.
+The online demo runs on a small CPU server (2 vCPUs, 4 GB, no GPU) with Whisper `base.en`, behind Caddy for HTTPS, as a hardened systemd service with a firewall, a one-at-a-time transcription queue, a 10-second cap on recordings and a per-address rate limit. Everything is in [`deploy/`](deploy/): [`deploy/README.md`](deploy/README.md) explains the setup, `setup-vm.sh` prepares a fresh Debian 13 server and `update.sh` pushes a new version.
 
 ## Sources
 
