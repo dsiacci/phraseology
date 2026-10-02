@@ -1,11 +1,11 @@
 {
  "url": "https://159-89-0-214.sslip.io/?seed=71",
- "pilot_voice": "fr_FR-mls-medium#6",
+ "pilot_voice": "kokoro:ff_siwis@en-us",
  "length_scale": 1.0,
  "open_seconds": 5,
  "end_seconds": 4.5,
  "cards": {
-  "open": "<div class='mono'>phraseology</div><h1>A traffic circuit in English, out loud</h1><p>The real online demo: Whisper hears, rules check, Piper speaks for the tower. The pilot is synthetic too, with a French accent. Waits are cut.</p>",
+  "open": "<div class='mono'>phraseology</div><h1>A traffic circuit in English, out loud</h1><p>The real online demo: Whisper hears, rules check, Piper speaks for the tower. The pilot's voice, with a French accent, is Kokoro, an open model, standing in for a person. Waits are cut.</p>",
   "end": "<h1>phraseology</h1><div class='sub'>github.com/dsiacci/phraseology</div><p>Open models on your laptop. No language model: the rules decide.</p><p>A practice game, not training.</p>"
  },
  "lines": [
@@ -22,7 +22,7 @@
    "keep": true,
    "expect": "corrected",
    "caption": "Read back, with a wrong QNH on purpose",
-   "means": "QNH one zero two zero, runway two seven, holding point Alpha One via Bravo, Foxtrot Alpha Bravo Charlie Delta.",
+   "means": "Runway two seven, QNH one zero two zero, holding point Alpha One via Bravo, Foxtrot Alpha Bravo Charlie Delta.",
    "say": "Kiou-ènn-eïtch ouane ziro tou ziro, reunouaï tou sévène, holdinng poïnte Alfa Ouane via Bravo, Foxtrot Alfa Bravo Charlie Delta.",
    "expect_tower": "negative"
   },
@@ -96,5 +96,9 @@
   "show_answer": 0.9,
   "before_tower": 0.25,
   "after_settled": 0.2
+ },
+ "elevenlabs": {
+  "model": "eleven_v3",
+  "prefix": "[strong French accent] "
  }
 }
