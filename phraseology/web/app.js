@@ -325,7 +325,9 @@
     audioCtx();
     status("");
     try {
-      const body = await api("/api/game", { surprises: opts.surprises, slow: opts.slow });
+      // ?seed=1234 replays the same game (handy for a demo recording).
+      const seed = new URLSearchParams(location.search).get("seed");
+      const body = await api("/api/game", { surprises: opts.surprises, slow: opts.slow, seed: seed || undefined });
       st.game = body.game;
       st.done = false;
       $("#log").replaceChildren();
