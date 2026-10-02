@@ -66,9 +66,9 @@ button.primary { background: var(--accent); color: var(--accent-ink); border-col
 .tx.you { background: var(--tx-you); }
 .tx-head { display: flex; gap: 10px; align-items: center; justify-content: space-between; }
 .who { font-family: var(--mono); font-size: 12px; letter-spacing: .08em; color: var(--muted); }
-.tx.you.ok .who::after { content: " · read back accepted"; color: var(--ok); letter-spacing: 0; }
-.tx.you.ko .who::after { content: " · the tower needs a correction"; color: var(--bad); letter-spacing: 0; }
-.tx.you.again .who::after { content: " · say again"; color: var(--muted); letter-spacing: 0; }
+.verdict { letter-spacing: 0; }
+.tx.you.ok .verdict { color: var(--ok); }
+.tx.you.ko .verdict { color: var(--bad); }
 .text { overflow-wrap: anywhere; }
 .text.hidden-text { filter: blur(6px); cursor: pointer; user-select: none; }
 .text.hidden-text::after { content: ""; }

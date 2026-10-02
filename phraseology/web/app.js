@@ -8,7 +8,7 @@
   const TAIL_MS = 300;       // kept after release, so the callsign isn't cut
   const OUT_RATE = 16000;
 
-  const st = { cfg: null, game: null, done: false, sending: false, lastAccepted: true };
+  const st = { cfg: null, game: null, done: false, sending: false, lastAccepted: true, answering: null };
   const opts = { text: true, slow: false, radio: true, surprises: true };
 
   // ------------------------------------------------------------ helpers
@@ -117,11 +117,17 @@
     li.scrollIntoView({ block: "nearest", behavior: "smooth" });
   }
 
+  const ACCEPTED = { readback: "read back accepted", ack: "acknowledged", report: "understood" };
+
   function addYou(body) {
     const cls = body.sayAgain ? "again" : body.accepted ? "ok" : "ko";
     const li = el("li", `tx you ${cls}`);
     const head = el("div", "tx-head");
-    head.append(el("span", "who", "YOU"));
+    const who = el("span", "who", "YOU");
+    const verdict = body.sayAgain ? "say again"
+      : body.accepted ? (ACCEPTED[st.answering] || "accepted") : "the tower needs a correction";
+    who.append(el("span", "verdict", ` · ${verdict}`));
+    head.append(who);
     li.append(head);
     const said = (body.transcript || "").trim();
     li.append(el("span", "text", said ? `“${said}”` : "(nothing heard)"));
@@ -175,6 +181,7 @@
   async function apply(body, you) {
     if (you) addYou(body);
     st.done = !!body.done;
+    st.answering = body.expect;  // what the next transmission answers
     st.lastAccepted = you ? !!(body.accepted || body.sayAgain) : true;
     $("#skip").hidden = st.lastAccepted || st.done;
     updateRadio(body);
