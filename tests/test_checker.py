@@ -105,3 +105,13 @@ def test_unit_below_1000():
     ex = exchange(g, "taxi_clearance")
     res = check(ex.expect, ex.example.replace(" hectopascals", ""), g.ctx)
     assert res.ok and "qnh_unit" in codes(res)
+
+
+def test_niner_heard_as_nine_oh():
+    g = next(Game(Settings(surprises=False), seed=s) for s in range(1, 500)
+             if Game(Settings(surprises=False), seed=s).altimeter_value == 998)
+    ex = exchange(g, "taxi_clearance")
+    said = ex.example.replace("QNH 998", "QNH 9098")
+    assert check(ex.expect, said, g.ctx).ok
+    wrong = ex.example.replace("QNH 998", "QNH 990")
+    assert [i.kind for i in check(ex.expect, wrong, g.ctx).wrong] == ["qnh"]

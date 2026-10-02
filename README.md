@@ -110,7 +110,14 @@ The audio tests close the loop with the real models: Piper speaks correct and wr
 - no wrong readback is ever accepted;
 - correct readbacks get through, with at most one in four misheard (the tower then asks again).
 
-Measured on 2 October 2026 with `base.en` on a 2-core server and both voices: 14 of 14 wrong readbacks rejected, 14 of 16 correct ones accepted. The two misses were mishearings of the synthetic voices ("vacate red" for "vacate right", "Coxtrot" for "Foxtrot"). `PHRASEOLOGY_TEST_MODEL` and `PHRASEOLOGY_TEST_VOICES` change the model and the voices.
+Measured on 2 October 2026 on a 2-core server, with both voices:
+
+| Model | Wrong readbacks rejected | Correct readbacks accepted |
+|---|---|---|
+| `base.en` (the online demo) | 14 of 14 | 14 of 16 |
+| `small.en` (the laptop default) | 14 of 14 | 15 of 16 |
+
+Every miss was a correct readback misheard ("vacate red" for "vacate right", "Coxtrot" for "Foxtrot", "12 and decimal 805" for "one two one decimal eight zero five"), so the tower asked again. The `small.en` figure counts a fix made after that run: "niner niner eight" had come out as "9098" and "90908", and since no altimeter setting reads above 1100 hPa, the checker now drops the zero after a nine in an impossible value. `PHRASEOLOGY_TEST_MODEL` and `PHRASEOLOGY_TEST_VOICES` change the model and the voices.
 
 ## Privacy
 

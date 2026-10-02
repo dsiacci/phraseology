@@ -158,7 +158,16 @@ def find_phrase(tokens: list[str], words: tuple, start: int = 0,
     return -1
 
 
-def _match_number(tokens, keywords, expected, conflicts=()):
+def _undo_nine_oh(run: str) -> str:
+    """'Niner niner eight' heard as '9098' or '90908'. No altimeter setting
+    reads above 1100 hPa, and 'niner' sounds like 'nine-oh', so drop the
+    zeros that follow a nine."""
+    if run and int(run) > 1100 and "90" in run:
+        return run.replace("90", "9")
+    return run
+
+
+def _match_number(tokens, keywords, expected, conflicts=(), fix=None):
     """Keyword followed by digits: runway 27, QNH 1013, squawk 4521."""
     said = None
     for i, tok in enumerate(tokens):
@@ -170,7 +179,10 @@ def _match_number(tokens, keywords, expected, conflicts=()):
                 return "wrong", f"{tok.upper()} {digits}"
             if digits == expected:
                 return "ok", digits
-            said = digits
+            if fix and fix(_digits_after(tokens, i + 1, len(expected) + 2)) == expected:
+                return "ok", expected
+            # Show what was said in full: "QNH 1008", not "QNH 100".
+            said = _digits_after(tokens, i + 1, 4) if fix else digits
     if said is not None:
         return "wrong", said
     for _, group in _digit_groups(tokens):
@@ -236,7 +248,7 @@ def match_item(tokens: list[str], item: Item, callsigns=()) -> tuple[str, str | 
     if k == "qnh":
         setting = item.words[0] if item.words else "qnh"
         other = "qfe" if setting == "qnh" else "qnh"
-        return _match_number(tokens, (setting,), item.value, (other,))
+        return _match_number(tokens, (setting,), item.value, (other,), fix=_undo_nine_oh)
     if k == "squawk":
         return _match_number(tokens, ("squawk",), item.value)
     if k == "holding_point":
