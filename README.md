@@ -63,12 +63,14 @@ The checker covers the phraseology of this one circuit. It is not a complete or 
 
 ## Run it on your laptop
 
-Any recent laptop, Mac or PC, no graphics card needed: 4 CPU cores or more, 8 GB of memory, 2 GB of disk, a microphone (a headset is better), Python 3.9 or newer, and a browser. Internet is needed only once, to download the models; after that everything runs offline.
+Any recent laptop, Mac or PC, no graphics card needed: 4 CPU cores or more, 8 GB of memory, 2 GB of disk, a microphone (a headset is better), Python 3.10 or newer (3.12 recommended), and a browser. Internet is needed only once, to download the models; after that everything runs offline.
+
+The Python that comes with macOS is too old for the speech libraries' current builds; install a recent one first (`brew install python@3.12`, then use `python3.12` below). On Windows, `py -3.12`.
 
 ```bash
 git clone https://github.com/dsiacci/phraseology.git
 cd phraseology
-python3 -m venv .venv
+python3.12 -m venv .venv
 source .venv/bin/activate            # Windows: .venv\Scripts\activate
 pip install .
 python -m phraseology download       # Whisper small.en and two Piper voices

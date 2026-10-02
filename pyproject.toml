@@ -8,7 +8,7 @@ version = "0.1.0"
 description = "Practice traffic-circuit radio calls in English, out loud, with open models on your own machine."
 readme = "README.md"
 license = "GPL-3.0-or-later"
-requires-python = ">=3.9"
+requires-python = ">=3.10"
 dependencies = [
     "faster-whisper==1.2.1",
     "piper-tts==1.8.0",
