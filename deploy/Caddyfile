@@ -1,0 +1,19 @@
+{
+	# HTTP/1.1 and HTTP/2 only: the firewall opens TCP 443, not UDP.
+	servers {
+		protocols h1 h2
+	}
+	# No access log: it would hold visitors' addresses.
+}
+
+{$DEMO_DOMAIN} {
+	encode zstd gzip
+	request_body {
+		max_size 600KB
+	}
+	header {
+		Strict-Transport-Security "max-age=31536000"
+		-Server
+	}
+	reverse_proxy 127.0.0.1:8000
+}

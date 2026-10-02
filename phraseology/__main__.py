@@ -29,6 +29,8 @@ def add_game_options(p):
 def cmd_serve(args):
     from .server import App, Limits, make_server
     logging.basicConfig(level=logging.INFO, format="%(asctime)s %(message)s")
+    for noisy in ("faster_whisper", "httpx", "huggingface_hub"):
+        logging.getLogger(noisy).setLevel(logging.WARNING)
     transcriber = speaker = None
     if not args.no_speech:
         from .speech import Speaker, Transcriber
