@@ -126,7 +126,12 @@ def main():
     # 4. one file
     listing = OUT / "parts.txt"
     listing.write_text("".join(f"file '{p.name}'\n" for p in parts))
-    run("-f", "concat", "-safe", "0", "-i", listing, "-c", "copy", OUT / "demo.mp4")
+    run("-f", "concat", "-safe", "0", "-i", listing, "-c", "copy", OUT / "joined.mp4")
+    # Web-ready: loudness at -16 LUFS, stereo (some players are quiet or
+    # silent with mono AAC), index at the front so playback starts at once.
+    run("-i", OUT / "joined.mp4", "-c:v", "copy", "-af", "loudnorm=I=-16:TP=-1.5:LRA=11",
+        "-ac", "2", "-ar", "48000", "-c:a", "aac", "-b:a", "128k", "-movflags", "+faststart",
+        OUT / "demo.mp4")
     print(f"{OUT / 'demo.mp4'}: {len(segments)} segments")
 
 
