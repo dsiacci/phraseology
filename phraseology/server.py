@@ -385,8 +385,6 @@ class Handler(BaseHTTPRequestHandler):
                 audio, seconds = wav_to_array(raw)
             except ValueError as exc:
                 return self.error(HTTPStatus.BAD_REQUEST, str(exc))
-            finally:
-                raw = None
             if seconds > app.limits.max_seconds + 0.5:
                 return self.error(HTTPStatus.REQUEST_ENTITY_TOO_LARGE,
                                   f"recordings are limited to {app.limits.max_seconds:.0f} seconds")
@@ -404,7 +402,6 @@ class Handler(BaseHTTPRequestHandler):
                         return self.error(HTTPStatus.SERVICE_UNAVAILABLE,
                                           "the frequency is busy, try again shortly", {"Retry-After": "10"})
                     text = app.transcriber.transcribe(audio, app.prompt(game))
-                audio = None
                 turn = game.submit(text)
                 body = app.state(game, opts, turn.transmissions, turn, text)
                 body["sttMs"] = round((time.monotonic() - t0) * 1000)

@@ -286,10 +286,6 @@ def find_callsign(tokens: list[str], full_letters: str, short_letters: str):
 TRAILING_OK = {"over", "thanks", "thank", "you", "cheers", "bye", "good", "day"}
 
 
-def _station_words(aerodrome: str) -> set:
-    return {"ground", "tower", "radio", "information", aerodrome.lower()}
-
-
 def _is_station_name(tok: str, aerodrome: str) -> bool:
     if tok in ("ground", "tower"):
         return True

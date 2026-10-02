@@ -101,7 +101,7 @@ def main(argv=None):
     s.add_argument("--host", default="127.0.0.1")
     s.add_argument("--port", type=int, default=8000)
     s.add_argument("--model", default="small.en", help="Whisper model: small.en (default), base.en, tiny.en")
-    s.add_argument("--threads", type=int, default=0, help="CPU threads for Whisper (0 = all)")
+    s.add_argument("--threads", type=int, default=0, help="CPU threads for Whisper (0 = faster-whisper's default)")
     s.add_argument("--beam", type=int, default=5)
     s.add_argument("--voices-dir", default=str(DEFAULT_VOICES_DIR))
     s.add_argument("--tower-voice", default=TOWER_VOICE)

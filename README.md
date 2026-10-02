@@ -91,7 +91,7 @@ Options:
 | `--aerodrome` | `Isola` | the fictional aerodrome's name |
 | `--altimeter` | `QNH` | or `QFE` |
 | `--model` | `small.en` | `base.en` is lighter and a little less accurate |
-| `--threads` | all cores | CPU threads for Whisper |
+| `--threads` | `0` | CPU threads for Whisper (0 = faster-whisper's default, 4) |
 | `--tower-voice` | `en_GB-cori-medium` | any Piper voice in the voices folder |
 | `--traffic-voice` | `en_US-norman-medium` | the other aircraft |
 
