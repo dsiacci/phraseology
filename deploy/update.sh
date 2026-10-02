@@ -15,7 +15,7 @@ venv/bin/pip install -q --upgrade pip
 venv/bin/pip install -q --upgrade ./src
 . /etc/default/phraseology
 runuser -u phraseology -- env HOME=/opt/phraseology HF_HOME=/opt/phraseology/hf \
-    venv/bin/python -m phraseology download --models base.en \
+    venv/bin/python -m phraseology download --models "$MODEL" \
     --voices "$TOWER_VOICE" "$TRAFFIC_VOICE" --voices-dir /opt/phraseology/voices
 systemctl restart phraseology
 for i in $(seq 1 30); do

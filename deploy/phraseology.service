@@ -10,7 +10,7 @@ WorkingDirectory=/opt/phraseology
 Environment=HOME=/opt/phraseology HF_HOME=/opt/phraseology/hf HF_HUB_OFFLINE=1 HF_HUB_DISABLE_TELEMETRY=1 PYTHONUNBUFFERED=1
 EnvironmentFile=-/etc/default/phraseology
 ExecStart=/opt/phraseology/venv/bin/python -m phraseology serve --public \
-    --host 127.0.0.1 --port 8000 --model base.en --threads 2 \
+    --host 127.0.0.1 --port 8000 --model ${MODEL} --beam ${BEAM} --threads 2 \
     --voices-dir /opt/phraseology/voices \
     --tower-voice ${TOWER_VOICE} --traffic-voice ${TRAFFIC_VOICE} \
     --callsign ${CALLSIGN} --aerodrome ${AERODROME} --altimeter ${ALTIMETER}

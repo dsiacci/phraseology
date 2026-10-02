@@ -259,6 +259,11 @@ def match_item(tokens: list[str], item: Item, callsigns=()) -> tuple[str, str | 
         return _match_frequency(tokens, item.value)
     if k == "sequence":
         return _match_number(tokens, ("number",), item.value)
+    if k == "traffic" and find_phrase(tokens, item.words) < 0 and \
+            not any(find_phrase(tokens, alt) >= 0 for alt in item.alternatives):
+        # "Cherokee in sight" heard as "Cherokee and set": naming the traffic
+        # still shows it was understood; the feedback asks for "in sight".
+        return ("ok-loose", item.value) if item.value.lower() in tokens else ("missing", None)
     # Phrase items: clearances, instructions, report words. A conflict is
     # a phrase that means something else ("cleared to land" when the
     # tower said "cleared touch and go").
@@ -376,6 +381,9 @@ def check(expect: Expectation, transcript: str, ctx: Context) -> Result:
         if status in ("ok", "ok-loose"):
             if status == "ok-loose" and item.kind == "qnh":
                 res.findings.append(Finding("note", "qnh_word", f"Say \"QNH\" before the value: \"{item.display}\"."))
+            if status == "ok-loose" and item.kind == "traffic":
+                res.findings.append(Finding("note", "in_sight",
+                                            f"Say \"{item.display}\" once you see it (\"looking out\" until then)."))
             if item.kind == "qnh" and int(item.value) < 1000 and "hpa" not in tokens:
                 res.findings.append(Finding("note", "qnh_unit",
                                             f"Below 1000, say the unit too: \"{item.display}\"."))

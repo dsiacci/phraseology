@@ -115,3 +115,12 @@ def test_niner_heard_as_nine_oh():
     assert check(ex.expect, said, g.ctx).ok
     wrong = ex.example.replace("QNH 998", "QNH 990")
     assert [i.kind for i in check(ex.expect, wrong, g.ctx).wrong] == ["qnh"]
+
+
+def test_traffic_named_but_in_sight_misheard():
+    g = next(Game(seed=s) for s in range(1, 500) if "follow" in Game(seed=s).surprises())
+    ex = next(e for e in g.exchanges if e.id.startswith("follow"))
+    t = g.traffic_type
+    res = check(ex.expect, f"Number 2, {t} and set, F-CD", g.ctx)
+    assert res.ok and "in_sight" in codes(res)
+    assert not check(ex.expect, "Number 2, F-CD", g.ctx).ok

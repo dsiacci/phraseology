@@ -1,4 +1,8 @@
 # /etc/default/phraseology: what the online demo plays.
+# small.en hears accented English much better than base.en; it takes about
+# 4 s per readback on 2 vCPUs, against 1.4 s for base.en.
+MODEL=small.en
+BEAM=5
 TOWER_VOICE=en_US-norman-medium
 TRAFFIC_VOICE=en_GB-cori-medium
 CALLSIGN=F-ABCD

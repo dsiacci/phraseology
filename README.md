@@ -116,8 +116,8 @@ Measured on 2 October 2026 on a 2-core server, with both voices:
 
 | Model | Wrong readbacks rejected | Correct readbacks accepted |
 |---|---|---|
-| `base.en` (the online demo) | 14 of 14 | 14 of 16 |
-| `small.en` (the laptop default) | 14 of 14 | 15 of 16 |
+| `base.en` | 14 of 14 | 14 of 16 |
+| `small.en` (the laptop default, and the online demo) | 14 of 14 | 15 of 16 |
 
 Every miss was a correct readback misheard ("vacate red" for "vacate right", "Coxtrot" for "Foxtrot", "12 and decimal 805" for "one two one decimal eight zero five"), so the tower asked again. The `small.en` figure counts a fix made after that run: "niner niner eight" had come out as "9098" and "90908", and since no altimeter setting reads above 1100 hPa, the checker now drops the zero after a nine in an impossible value. `PHRASEOLOGY_TEST_MODEL` and `PHRASEOLOGY_TEST_VOICES` change the model and the voices.
 
@@ -129,7 +129,7 @@ The online demo works differently: your voice is sent to the demo server, transc
 
 ## Deploy
 
-The online demo runs on a small CPU server (2 vCPUs, 4 GB, no GPU) with Whisper `base.en`, behind Caddy for HTTPS, as a hardened systemd service with a firewall, a one-at-a-time transcription queue, a 10-second cap on recordings and a per-address rate limit. Everything is in [`deploy/`](deploy/): [`deploy/README.md`](deploy/README.md) explains the setup, `setup-vm.sh` prepares a fresh Debian 13 server and `update.sh` pushes a new version.
+The online demo runs on a small CPU server (2 vCPUs, 4 GB, no GPU) with Whisper `small.en`, behind Caddy for HTTPS, as a hardened systemd service with a firewall, a one-at-a-time transcription queue, a 10-second cap on recordings and a per-address rate limit. Everything is in [`deploy/`](deploy/): [`deploy/README.md`](deploy/README.md) explains the setup, `setup-vm.sh` prepares a fresh Debian 13 server and `update.sh` pushes a new version.
 
 ## Sources
 
