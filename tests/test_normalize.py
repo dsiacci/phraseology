@@ -38,6 +38,7 @@ def test_frequencies():
 def test_phrases_glued():
     assert normalize("touch-and-go") == ["touchandgo"]
     assert normalize("touch and go") == ["touchandgo"]
+    assert normalize("downwind, touch, seven, go") == ["downwind", "touchandgo"]
     assert normalize("line up and wait")[0] == "lineup"
     assert normalize("Cherokee Insight") == ["cherokee", "insight"]
     assert normalize("say again") == ["sayagain"]

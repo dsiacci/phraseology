@@ -53,6 +53,8 @@ PHRASES = [
     (r"\btake[\s-]*offs?\b", "takeoff"),
     (r"\btouch[\s-]*(?:and|&|n|an)[\s-]*go(?:es)?\b", "touchandgo"),
     (r"\btouch[\s-]*n[\s-]*go\b", "touchandgo"),
+    # "touch, seven, go": one misheard word between "touch" and "go".
+    (r"\btouch[\s,-]+[a-z]{1,6}[\s,-]+go(?:es)?\b", "touchandgo"),
     # "touch and..." with the last word swallowed: nothing else starts so.
     (r"\btouch[\s-]+(?:and|&)\b(?![\s-]*go)", "touchandgo"),
     (r"\bline[\s-]*up\b", "lineup"),

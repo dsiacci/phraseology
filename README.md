@@ -127,6 +127,10 @@ On your laptop, your voice never leaves the machine: the browser sends the recor
 
 The online demo works differently: your voice is sent to the demo server, transcribed in memory by Whisper, then discarded. Nothing is written to disk, and the server log holds only the method, path, status and duration of each request, never audio, text or addresses.
 
+## Demo video
+
+The demo video is one real game on the online demo, recorded in a headless browser with a simulated microphone: speech recognition, the checker and the tower are the real ones, and only the pilot's voice is synthetic too (a French Piper voice reading English, for a strong accent). [`demo-video/`](demo-video/) has the recipe to make it again.
+
 ## Deploy
 
 The online demo runs on a small CPU server (2 vCPUs, 4 GB, no GPU) with Whisper `small.en`, behind Caddy for HTTPS, as a hardened systemd service with a firewall, a one-at-a-time transcription queue, a 10-second cap on recordings and a per-address rate limit. Everything is in [`deploy/`](deploy/): [`deploy/README.md`](deploy/README.md) explains the setup, `setup-vm.sh` prepares a fresh Debian 13 server and `update.sh` pushes a new version.
@@ -143,7 +147,7 @@ Built on open work, with thanks:
 - [Whisper](https://github.com/openai/whisper) by OpenAI: code and model weights under the MIT license. Models converted to CTranslate2 by SYSTRAN (`Systran/faster-whisper-small.en`, `base.en`, MIT).
 - [faster-whisper](https://github.com/SYSTRAN/faster-whisper) (MIT) and [CTranslate2](https://github.com/OpenNMT/CTranslate2) (MIT), with the [Silero VAD](https://github.com/snakers4/silero-vad) model (MIT) for voice activity detection.
 - [Piper](https://github.com/OHF-Voice/piper1-gpl) (GPL-3.0-or-later), which uses [espeak-ng](https://github.com/espeak-ng/espeak-ng) (GPL-3.0-or-later), running on [ONNX Runtime](https://onnxruntime.ai) (MIT).
-- Voices from [rhasspy/piper-voices](https://huggingface.co/rhasspy/piper-voices): `en_US-norman-medium` (the tower) and `en_GB-cori-medium` (the other aircraft), both trained from scratch by Bryce Beattie on public-domain LibriVox recordings. Some other English voices there are fine-tuned from a voice whose dataset license only covers research, so they are left out.
+- Voices from [rhasspy/piper-voices](https://huggingface.co/rhasspy/piper-voices): `en_US-norman-medium` (the tower) and `en_GB-cori-medium` (the other aircraft), both trained from scratch by Bryce Beattie on public-domain LibriVox recordings. Several other English voices there are fine-tuned from `en_US-lessac`, whose dataset comes under the Blizzard Challenge 2013 license, so they are left out. The demo video's pilot is `fr_FR-mls-medium`, trained from scratch on [Multilingual LibriSpeech](http://www.openslr.org/94/) (CC BY 4.0).
 - [NumPy](https://numpy.org) (BSD).
 
 ## License

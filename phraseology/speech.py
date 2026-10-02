@@ -109,7 +109,10 @@ class Transcriber:
             segments, _ = self.model.transcribe(
                 audio, language="en", beam_size=self.beam_size, initial_prompt=prompt or None,
                 condition_on_previous_text=False, temperature=0.0, vad_filter=self.vad,
-                without_timestamps=True)
+                without_timestamps=True,
+                # A readback is short. A cap stops a decoding that loops
+                # ("Alpha Two, Alpha Two, ...") from holding the CPU.
+                max_new_tokens=96)
             texts = [s.text.strip() for s in segments
                      if not (s.no_speech_prob > 0.6 and s.avg_logprob < -1.0)]
         return " ".join(t for t in texts if t).strip()

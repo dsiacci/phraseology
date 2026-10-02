@@ -11,3 +11,6 @@ HANDOFF.md
 *.onnx
 *.onnx.json
 .gstack/
+demo-video/out/
+demo-video/voices/
+node_modules/

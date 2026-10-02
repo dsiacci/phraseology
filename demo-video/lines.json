@@ -1,0 +1,92 @@
+{
+ "url": "https://159-89-0-214.sslip.io/?seed=71",
+ "pilot_voice": "fr_FR-mls-medium#6",
+ "length_scale": 1.0,
+ "open_seconds": 6.5,
+ "end_seconds": 6,
+ "cards": {
+  "open": "<div class='mono'>phraseology</div><h1>A traffic circuit in English, out loud</h1><p>Recorded on the online demo: Whisper small.en hears the pilot, rules check the readback, Piper speaks for the tower. The pilot's voice is synthetic too, with a French accent, so you can hear the whole loop. The waits while the server transcribes are cut.</p>",
+  "end": "<h1>phraseology</h1><div class='sub'>github.com/dsiacci/phraseology</div><p>Open models on your own laptop: Whisper hears, Piper speaks. No language model: the rules decide.</p><p>A practice game, not training. Your instructor and your national authority's manual are the reference.</p>"
+ },
+ "lines": [
+  {
+   "step": "request_taxi",
+   "keep": true,
+   "expect": "ok",
+   "caption": "Hold Space and call Ground",
+   "means": "Isola Ground, Foxtrot Alpha Bravo Charlie Delta, at the flying club, request taxi for circuits.",
+   "say": "Isola Graound, Foxtrot Alfa Bravo Charlie Delta, at ze flaïïng kleub, riquouest taxi for seurkits."
+  },
+  {
+   "step": "taxi_clearance",
+   "keep": true,
+   "expect": "corrected",
+   "caption": "Read back, with a wrong QNH on purpose",
+   "means": "QNH one zero two zero, runway two seven, holding point Alpha One via Bravo, Foxtrot Alpha Bravo Charlie Delta.",
+   "say": "Kiou-ènn-eïtch ouane ziro tou ziro, reunouaï tou sévène, holdinng poïnte Alfa Ouane via Bravo, Foxtrot Alfa Bravo Charlie Delta.",
+   "expect_tower": "negative"
+  },
+  {
+   "step": "taxi_correction",
+   "keep": true,
+   "expect": "ok",
+   "caption": "Negative: read back the right value",
+   "means": "QNH one zero one zero, Foxtrot Alpha Bravo Charlie Delta.",
+   "say": "Kiou-ènn-eïtch ouane ziro ouane ziro, Foxtrot Alfa Bravo Charlie Delta."
+  },
+  {
+   "step": "ready_ground",
+   "keep": false,
+   "expect": "ok",
+   "means": "Foxtrot Alpha Bravo Charlie Delta, holding point Alpha One, ready.",
+   "say": "Foxtrot Alfa Bravo Charlie Delta, holdinng poïnte Alfa Ouane, rèdi."
+  },
+  {
+   "step": "contact_tower",
+   "keep": false,
+   "expect": "ok",
+   "skip_if_wrong": true,
+   "means": "Squawk two three four one, Tower one one eight decimal five zero five, Foxtrot Charlie Delta.",
+   "say": "Skouok tou tri for ouane, Taoueur ouane ouane eït dessimal faïve ziro faïve, Foxtrot Charlie Delta."
+  },
+  {
+   "step": "ready_tower",
+   "keep": false,
+   "expect": "ok",
+   "means": "Isola Tower, Foxtrot Alpha Bravo Charlie Delta, holding point Alpha One, ready for departure.",
+   "say": "Isola Taoueur, Foxtrot Alfa Bravo Charlie Delta, holdinng poïnte Alfa Ouane, rèdi for dipartcheur."
+  },
+  {
+   "step": "line_up",
+   "keep": false,
+   "expect": "ok",
+   "means": "Runway two seven, line up and wait, Foxtrot Alpha Bravo Charlie Delta.",
+   "say": "Reunouaï tou sévène, laïne eup ènd ouèïte, Foxtrot Alfa Bravo Charlie Delta."
+  },
+  {
+   "step": "takeoff",
+   "keep": true,
+   "expect": "ok",
+   "caption": "Take-off clearance",
+   "means": "Runway two seven, cleared for take-off, Foxtrot Charlie Delta.",
+   "say": "Reunouaï tou sévène, clired for tèïk off, Foxtrot Charlie Delta."
+  },
+  {
+   "step": "downwind_1",
+   "keep": true,
+   "expect": "ok",
+   "caption": "Downwind, and another aircraft on the frequency",
+   "means": "Foxtrot Charlie Delta, downwind, touch and go.",
+   "say": "Foxtrot Charlie Delta, daounouinde, teutch-ènn-go.",
+   "expect_tower": "follow the"
+  },
+  {
+   "step": "follow_1",
+   "keep": true,
+   "expect": "ok",
+   "caption": "Read back: number 2, traffic in sight",
+   "means": "Number two, Cherokee in sight, Foxtrot Charlie Delta.",
+   "say": "Number two, Cherokee in sight, Foxtrot Charlie Delta."
+  }
+ ]
+}
