@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Phraseology · circuit practice</title>
+<link rel="icon" href="/static/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/static/style.css">
+<script src="/static/app.js" defer></script>
+</head>
+<body>
+<div class="app">
+  <header class="top">
+    <div class="brand">
+      <h1>Phraseology</h1>
+      <p class="tagline">A traffic circuit in English, out loud.</p>
+    </div>
+    <div class="radio" aria-live="polite">
+      <div class="radio-row"><span class="radio-label">CALLSIGN</span><span id="r-callsign" class="radio-value">F-ABCD</span></div>
+      <div class="radio-row"><span class="radio-label" id="r-station">GROUND</span><span id="r-freq" class="radio-value">121.805</span></div>
+      <div class="radio-row"><span class="radio-label">STEP</span><span id="r-step" class="radio-value">–/–</span></div>
+    </div>
+  </header>
+
+  <section id="intro" class="intro">
+    <p>You are <strong id="i-callsign">F-ABCD</strong>, a light aircraft at <strong id="i-aerodrome">Isola</strong>, a fictional controlled aerodrome. Taxi out, fly a touch and go, then a second circuit to land, and taxi back. The tower talks to you; you answer out loud.</p>
+    <ul class="how">
+      <li><kbd>Space</kbd> is your press-to-talk: hold it while you speak, release when you're done. On a phone, hold the round button.</li>
+      <li>Read back what has to be read back, with your callsign at the end. If the tower says <em>negative</em>, read back the corrected part.</li>
+      <li>Say <em>say again</em> (or press the button) to hear the last message again.</li>
+    </ul>
+    <div class="options">
+      <label><input type="checkbox" id="o-text" checked> Show what the tower says</label>
+      <label><input type="checkbox" id="o-slow"> Slower tower</label>
+      <label><input type="checkbox" id="o-radio" checked> Radio sound</label>
+      <label><input type="checkbox" id="o-surprises" checked> Surprises (traffic, orbit, full stop)</label>
+    </div>
+    <button id="start" class="primary" type="button">Start a circuit</button>
+    <p id="mode-note" class="mode-note"></p>
+  </section>
+
+  <main id="game" class="game" hidden>
+    <ol id="log" class="log" aria-live="polite"></ol>
+  </main>
+
+  <footer id="dock" class="dock" hidden>
+    <p id="hint" class="hint"></p>
+    <div class="controls">
+      <button id="ptt" class="ptt" type="button" aria-label="Hold to talk">
+        <span class="ptt-ring"><span class="ptt-level" id="level"></span></span>
+        <span class="ptt-text" id="ptt-text">Hold <kbd>Space</kbd> to talk</span>
+      </button>
+      <div class="side">
+        <button id="say-again" type="button">Say again</button>
+        <button id="skip" type="button" hidden>Skip</button>
+        <button id="new" type="button">New circuit</button>
+      </div>
+    </div>
+    <form id="type-form" class="type-form">
+      <label for="type-input" class="visually-hidden">Type your transmission</label>
+      <input id="type-input" type="text" autocomplete="off" maxlength="300" placeholder="No microphone? Type what you would say, then Enter">
+      <button type="submit">Send</button>
+    </form>
+    <p id="status" class="status" role="status"></p>
+  </footer>
+
+  <aside class="notice">
+    <p><strong>A practice game, not training.</strong> It is not an approved training device, not an assessment, and not a preparation for any language proficiency check. The aerodrome, frequencies and traffic are made up. Phraseology differs between countries: your instructor and your national authority's manual are the reference. In Europe the readback rule comes from SERA.8015(e) (Regulation (EU) No 923/2012).</p>
+    <p id="privacy"></p>
+  </aside>
+</div>
+</body>
+</html>
