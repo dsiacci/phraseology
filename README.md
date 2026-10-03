@@ -50,7 +50,7 @@ A few details that took some care:
 
 ## The rules the checker applies
 
-In our own words. The legal basis in Europe is SERA.8015(e) of Commission Implementing Regulation (EU) No 923/2012 (Standardised European Rules of the Air).
+These are the rules a pilot learns, in our own words.
 
 - Always read back: the runway in use; clearances and instructions to enter, land on, take off from, hold short of, cross or backtrack on a runway (so line up, take-off, touch and go and landing clearances); altimeter settings; transponder codes; new frequencies.
 - Other instructions, taxi instructions included, are read back or acknowledged so that it is clear you understood and will comply. This game asks for taxi instructions in full, as the UK and many aerodromes do.
@@ -137,8 +137,7 @@ The demo server used for the video was a small CPU server (2 vCPUs, 4 GB, no GPU
 
 ## Sources
 
-- Commission Implementing Regulation (EU) No 923/2012 (SERA), SERA.8015(e) on readbacks, and EASA's acceptable means of compliance and guidance material for it.
-- Your national authority's phraseology manual, for example the UK CAA's CAP 413 or the French DGAC's phraseology manual. Nothing from them is reproduced here: every message in the game is our own wording of standard phraseology, with made-up data.
+Your instructor and your country's official phraseology manual are the reference. Nothing from any manual is reproduced here: every message in the game is our own wording of standard phraseology, with made-up data.
 
 ## Credits
 
