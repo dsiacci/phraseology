@@ -1,7 +1,6 @@
 """Rule-based readback checker. No model decides anything here.
 
-The rules, in our own words (legal basis in Europe: SERA.8015(e),
-Commission Implementing Regulation (EU) No 923/2012):
+The rules a pilot learns, in our own words:
 
 * Always read back: the runway in use; clearances and instructions to
   enter, land on, take off from, hold short of, cross or backtrack on a
