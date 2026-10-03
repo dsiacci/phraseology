@@ -15,6 +15,8 @@ const { chromium } = require(process.env.PLAYWRIGHT_MODULE || "playwright");
 const HERE = __dirname;
 const OUT = path.join(HERE, "out");
 const script = JSON.parse(fs.readFileSync(path.join(HERE, "lines.json"), "utf8"));
+// The page to play: a local server by default, DEMO_URL for another one.
+const PAGE_URL = process.env.DEMO_URL || script.url;
 const W = 1280, H = 720;
 
 const INIT = `(() => {
@@ -76,7 +78,7 @@ async function play(browser) {
   const until = process.argv.includes("--until") ? Number(process.argv[process.argv.indexOf("--until") + 1]) : Infinity;
   let clean = false;
   for (let take = 0; take < takes && !clean; take++) {
-    await page.goto(script.url, { waitUntil: "networkidle" });
+    await page.goto(PAGE_URL, { waitUntil: "networkidle" });
     await page.waitForTimeout(2000);
     marks.push({ ev: "click_start", take, t: Date.now() });
     await page.click("#start");

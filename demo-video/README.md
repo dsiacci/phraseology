@@ -14,12 +14,13 @@ From the repository root, with phraseology installed (`pip install .`):
 pip install kokoro-onnx                              # for a Kokoro pilot voice (ELEVENLABS_API_KEY for ElevenLabs)
 python demo-video/make_lines.py                      # the pilot's lines -> demo-video/out/pilot_XX.wav
 npm install playwright && npx playwright install chromium
+python -m phraseology serve &                        # the game to record (or DEMO_URL=https://your-server/?seed=71)
 node demo-video/record.cjs                           # plays the game, records the page -> out/raw/, out/run.json
 pip install imageio-ffmpeg                           # or any ffmpeg on the PATH
 python demo-video/build.py                           # -> demo-video/out/demo.mp4
 ```
 
-Whisper hears a synthetic accent a little differently from one run to the next. `record.cjs` works in takes, as on a film set: when an exchange the video shows does not go as planned the first time, it starts a new game from the top, up to 8 takes (`TAKES=12` for more), and `build.py` uses the clean take. Nothing on screen is retouched. When no take comes out clean, `record.cjs` exits with code 2: change the spelling of the lines that misfire in `lines.json`, regenerate the lines, and check the start of the game with `node demo-video/record.cjs --until 2`. It takes about five minutes against the online demo (the tower answers about four seconds after each release).
+Whisper hears a synthetic accent a little differently from one run to the next. `record.cjs` works in takes, as on a film set: when an exchange the video shows does not go as planned the first time, it starts a new game from the top, up to 8 takes (`TAKES=12` for more), and `build.py` uses the clean take. Nothing on screen is retouched. When no take comes out clean, `record.cjs` exits with code 2: change the spelling of the lines that misfire in `lines.json`, regenerate the lines, and check the start of the game with `node demo-video/record.cjs --until 2`. It takes about five minutes against a two-vCPU server (the tower answers about four seconds after each release).
 
 ## What the steps do
 
@@ -31,7 +32,7 @@ Whisper hears a synthetic accent a little differently from one run to the next. 
 
 Everything is in `lines.json`:
 
-- `url`: the game to play (the seed fixes runway, QNH, squawk and surprises);
+- `url`: the game to play, on a local server by default (`DEMO_URL` records against another one, as for the published video); the seed fixes runway, QNH, squawk and surprises;
 - `pilot_voice`: `kokoro:<voice>@<lang>` (a voice or a blend such as `ff_siwis*0.6+am_michael*0.4`; `en-us` for English sounds, `fr-fr` to read with French rules), `elevenlabs:<voice name or id>` (settings under `elevenlabs`), or any Piper voice, with `#speaker` for a multi-speaker one;
 - for each line: `say` (what the voice reads, spelled for the accent), `means` (the English it stands for), `keep` (shown or cut), `caption`, `expect` (`ok` or `corrected`), `expect_tower` (a phrase the tower's answer must contain), `skip_if_wrong` (for a line the video doesn't show: skip it if Whisper mishears it);
 - `cards`: the text of the opening and closing cards.

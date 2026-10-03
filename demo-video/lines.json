@@ -1,5 +1,5 @@
 {
- "url": "https://159-89-0-214.sslip.io/?seed=71",
+ "url": "http://localhost:8000/?seed=71",
  "pilot_voice": "kokoro:ff_siwis@en-us",
  "length_scale": 1.0,
  "open_seconds": 5,
