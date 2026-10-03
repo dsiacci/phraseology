@@ -2,7 +2,7 @@
 
 How the demo video is made, so it can be made again after a change to the page.
 
-It is one real game on the online demo, recorded in headless Chromium. A simulated microphone speaks the pilot's lines while Space is held down, as a person would: speech recognition, the readback checker and the tower are the real ones. Only the pilot's voice stands in for a person: Kokoro-82M (open weights, Apache 2.0), its French voice reading English, for a French accent. The tower is `en_US-norman`, the other aircraft `en_GB-cori`, as on the demo.
+It is one real game on the demo server, recorded in headless Chromium. A simulated microphone speaks the pilot's lines while Space is held down, as a person would: speech recognition, the readback checker and the tower are the real ones. Only the pilot's voice stands in for a person: Kokoro-82M (open weights, Apache 2.0), its French voice reading English, for a French accent. The tower is `en_US-norman`, the other aircraft `en_GB-cori`, as on the demo.
 
 Two other pilot voices were tried and are still supported. A French Piper voice reading English spelled the French way (`fr_FR-mls`) sounded too synthetic. ElevenLabs (`eleven_v3` with a `[strong French accent]` tag) sounded natural but its accent stayed light, and on a free plan its French library voices are not available through the API.
 

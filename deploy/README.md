@@ -1,6 +1,6 @@
-# Deploying the online demo
+# Deploying an online demo
 
-The demo runs on one small Debian 13 server with no GPU: 2 vCPUs and 4 GB of memory. Whisper `small.en` runs on its CPU, with 2 threads: about 4.2 s per readback, against 1.4 s for `base.en`. The demo started on `base.en` for speed, and the first real test showed the cost: a French-accented "at the flying club, request taxi" came out as "de France, clamps, stochasticity". On readbacks spoken with a strong French accent (a French Piper voice reading English), `small.en` got 5 of 6 right and `base.en` 3 of 6; both got 12 of 12 with native voices. `distil-small.en` looped on its own output in this setup and was dropped. The model is a setting: `MODEL` in `/etc/default/phraseology`.
+The demo server used for the video (switched off since) was one small Debian 13 server with no GPU: 2 vCPUs and 4 GB of memory. Whisper `small.en` ran on its CPU, with 2 threads: about 4.2 s per readback, against 1.4 s for `base.en`. The demo started on `base.en` for speed, and the first real test showed the cost: a French-accented "at the flying club, request taxi" came out as "de France, clamps, stochasticity". On readbacks spoken with a strong French accent (a French Piper voice reading English), `small.en` got 5 of 6 right and `base.en` 3 of 6; both got 12 of 12 with native voices. `distil-small.en` looped on its own output in this setup and was dropped. The model is a setting: `MODEL` in `/etc/default/phraseology`.
 
 ```
 browser ──HTTPS──► Caddy (:443, certificate from Let's Encrypt)

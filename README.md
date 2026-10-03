@@ -117,7 +117,7 @@ Measured on 2 October 2026 on a 2-core server, with both voices:
 | Model | Wrong readbacks rejected | Correct readbacks accepted |
 |---|---|---|
 | `base.en` | 14 of 14 | 15 of 16 |
-| `small.en` (the laptop default, and the online demo) | 14 of 14 | 14 of 16 |
+| `small.en` (the laptop default, and the demo server's) | 14 of 14 | 14 of 16 |
 
 Every miss was a correct readback misheard ("A.K. Wright" and "Vacate Ridge" for "vacate right", "Foxtrot Charlie Tills"), so the tower asked again. Whisper does not hear a synthetic voice exactly the same way from one run to the next, so these counts move by one or two between runs; the wrong readbacks have been rejected in every run. `PHRASEOLOGY_TEST_MODEL` and `PHRASEOLOGY_TEST_VOICES` change the model and the voices.
 
@@ -125,15 +125,15 @@ Every miss was a correct readback misheard ("A.K. Wright" and "Vacate Ridge" for
 
 On your laptop, your voice never leaves the machine: the browser sends the recording to the local server on `localhost`, which transcribes it in memory and drops it.
 
-The online demo works differently: your voice is sent to the demo server, transcribed in memory by Whisper, then discarded. Nothing is written to disk, and the server log holds only the method, path, status and duration of each request, never audio, text or addresses.
+An online server works differently (the `--public` mode, as on the demo server used for the video): your voice is sent to that server, transcribed in memory by Whisper, then discarded. Nothing is written to disk, and the server log holds only the method, path, status and duration of each request, never audio, text or addresses.
 
 ## Demo video
 
-The demo video is one real game on the online demo, recorded in a headless browser with a simulated microphone: speech recognition, the checker and the tower are the real ones, and only the pilot's voice is synthetic too (Kokoro, an open model, with its French voice reading English). [`demo-video/`](demo-video/) has the recipe to make it again.
+The demo video is one real game, played on a demo server and recorded in a headless browser with a simulated microphone: speech recognition, the checker and the tower are the real ones, and only the pilot's voice is synthetic too (Kokoro, an open model, with its French voice reading English). [`demo-video/`](demo-video/) has the recipe to make it again.
 
 ## Deploy
 
-The online demo runs on a small CPU server (2 vCPUs, 4 GB, no GPU) with Whisper `small.en`, behind Caddy for HTTPS, as a hardened systemd service with a firewall, a one-at-a-time transcription queue, a 10-second cap on recordings and a per-address rate limit. Everything is in [`deploy/`](deploy/): [`deploy/README.md`](deploy/README.md) explains the setup, `setup-vm.sh` prepares a fresh Debian 13 server and `update.sh` pushes a new version.
+The demo server used for the video was a small CPU server (2 vCPUs, 4 GB, no GPU) with Whisper `small.en`, behind Caddy for HTTPS, as a hardened systemd service with a firewall, a one-at-a-time transcription queue, a 10-second cap on recordings and a per-address rate limit. It is switched off now. Everything to run your own is in [`deploy/`](deploy/): [`deploy/README.md`](deploy/README.md) explains the setup, `setup-vm.sh` prepares a fresh Debian 13 server and `update.sh` pushes a new version.
 
 ## Sources
 
